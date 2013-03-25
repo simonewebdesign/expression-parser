@@ -1,12 +1,17 @@
-class Main
-
-  def hello_world!
-    "Hello, World!"
+class String
+  def numeric?
+    Float(self) != nil rescue false
   end
 end
 
-main = Main.new
-puts main.hello_world!
+require './tokenizer.rb'
+require './evaluator.rb'
 
-# $ ruby main.rb
-# > Hello, World!
+print "Enter an expression: "
+expression = gets
+
+evaluator = Evaluator.new expression 
+result = evaluator.getExpressionValue
+
+puts expression
+print "= " + result
