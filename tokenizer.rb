@@ -1,32 +1,42 @@
-class Tokenizer
+require './string.rb'
 
+class Tokenizer
   attr_accessor :input, :start, :finish
 
   def initialize(inp)
     @input = inp
     @start = 0
     @finish = 0
-    self.nextToken  # find the first token
+    next_token  # find the first token
   end
 
-  def peekToken
-    nil if @start >= @input.length
-    @input[@start..@finish]
+  def peek_token
+    return nil if @start >= @input.length
+    puts "[peek_token] @input[#{@start}...#{@finish}]='#{@input[@start...@finish]}'"
+    @input[@start...@finish]
   end
 
-  def nextToken
-    r = self.peekToken
-    puts "r uguale " + r
+  def next_token
+    result = peek_token
+    puts "peek_token: '#{result}'"
     @start = @finish
-    r if @start >= @input.length
+    return result if @start >= @input.length
+    #puts "non ritornato"
 
     if @input[@start].numeric?
+      puts "@input[#{@start}]='#{@input[@start]}' appears to be numeric!"
       @finish = @start + 1
-      @finish = @finish + 1 while @finish < @input.length && @input[@finish].numeric?
+      #puts "finish minore di input length: #{@finish < @input.length}"
+      puts "@input[#{@finish}]='#{@input[@finish]}' numeric? #{@input[@finish].to_s.numeric?}"
+      while @finish < @input.length && @input[@finish].to_s.numeric?
+        puts "sono qui"
+        @finish = @finish + 1
+      end
     else
       @finish = @start + 1
     end
-    r
+
+    result
   end
-  
+
 end

@@ -1,17 +1,11 @@
-class String
-  def numeric?
-    Float(self) != nil rescue false
-  end
-end
-
-require './tokenizer.rb'
 require './evaluator.rb'
 
+# binding.pry
 print "Enter an expression: "
-expression = gets
+expression = "2+3-4+4" # gets
 
 evaluator = Evaluator.new expression 
-result = evaluator.getExpressionValue
+result = evaluator.get_expression_value
 
 puts expression
-print "= " + result
+print "= #{result}"

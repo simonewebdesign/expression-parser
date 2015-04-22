@@ -1,25 +1,33 @@
+require './tokenizer'
+
 class Evaluator
 
   attr_accessor :tokenizer
 
   def initialize(expression)
+    puts "The expression is #{expression}"
     @tokenizer = Tokenizer.new expression
   end
 
-  def getExpressionValue
-    value = self.getTermValue
+  def get_expression_value
+    value = get_term_value
     done = false
     while !done
-      token = @tokenizer.peekToken
+      token = @tokenizer.peek_token
+      puts "[get_expression_value] peek_token: '#{token}'"
       if (token == "+" || token == "-")
         print "token equals plus or minus!"
-        @tokenizer.nextToken  # ignore + or -
-        value2 = self.getTermValue
+        @tokenizer.next_token # discard + or -
+        value2 = get_term_value
+        puts "value2: #{value2}"
+
         if    token == "+"  
-          value = value + value2 
-        elsif token == "-"  
-          value = value - value2 
+          value = value.to_i + value2.to_i 
+        elsif token == "-"
+          puts "it is a subtraction. '#{value}' '#{value2}'"
+          value = value.to_i - value2.to_i 
         end
+
       else
         done = true
       end
@@ -27,18 +35,20 @@ class Evaluator
     value
   end
 
-  def getTermValue
-    value = self.getFactorValue
+  def get_term_value
+    value = get_factor_value
     done = false
     while !done
-      token = @tokenizer.peekToken
+      token = @tokenizer.peek_token
+      puts "[get_term_value] token: '#{token.to_s}'"
+
       if token == "*" || token == "/"
-        @tokenizer.nextToken
-        value2 = getFactorValue
-        if    token == "*"
-          value = value * value2
+        @tokenizer.next_token
+        value2 = get_factor_value
+        if token == "*"
+          value = value.to_i * value2.to_i
         elsif token == "/"
-          value = value / value2
+          value = value.to_i / value2.to_i
         end
       else
         done = true
@@ -47,16 +57,17 @@ class Evaluator
     value
   end
 
-  def getFactorValue
+  def get_factor_value
     value = 0
-    token = @tokenizer.peekToken
+    token = @tokenizer.peek_token
     if token == "("
-      @tokenizer.nextToken  # ignore "("
-      value = self.getExpressionValue
-      @tokenizer.nextToken   # ignore ")"
+      @tokenizer.next_token # ignore "("
+      value = get_expression_value
+      @tokenizer.next_token # ignore ")"
     else
-      value = @tokenizer.nextToken
+      value = @tokenizer.next_token
     end
+    puts "get_factor_value: '#{value}'"
     value
   end
 
