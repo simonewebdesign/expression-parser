@@ -16,10 +16,12 @@ class Evaluator
       token = @tokenizer.peek_token
       puts "[get_expression_value] peek_token: '#{token}'"
       if (token == "+" || token == "-")
-        print "token equals plus or minus!"
+        puts "[get_expression_value] token is #{token} (+ or -)."
+        puts "[get_expression_value] calling [next_token]"
         @tokenizer.next_token # discard + or -
+        puts "[get_expression_value] calling [get_term_value]"
         value2 = get_term_value
-        puts "value2: #{value2}"
+        puts "[get_expression_value] get_term_value2: '#{value2}'"
 
         if    token == "+"  
           value = value.to_i + value2.to_i 
@@ -30,8 +32,10 @@ class Evaluator
 
       else
         done = true
+        puts "[get_expression_value] Done."
       end
     end
+    puts "#######THE VALUE IS #{value}"
     value
   end
 
@@ -52,6 +56,7 @@ class Evaluator
         end
       else
         done = true
+        puts "[get_term_value] Done."
       end
     end
     value
@@ -59,15 +64,18 @@ class Evaluator
 
   def get_factor_value
     value = 0
+    puts '[get_factor_value] calling [peek_token]'
     token = @tokenizer.peek_token
+    puts "[get_factor_value] next token: '#{token}'"
     if token == "("
       @tokenizer.next_token # ignore "("
       value = get_expression_value
       @tokenizer.next_token # ignore ")"
     else
+      puts '[get_factor_value] calling [next_token]'
       value = @tokenizer.next_token
     end
-    puts "get_factor_value: '#{value}'"
+    puts "[get_factor_value]: returning '#{value}'"
     value
   end
 
