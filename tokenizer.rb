@@ -4,7 +4,7 @@ class Tokenizer
   attr_accessor :input, :start, :finish
 
   def initialize(inp)
-    @input = inp
+    @input = inp.strip_whitespace_chars
     @start = 0
     @finish = 0
     next_token  # find the first token

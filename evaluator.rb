@@ -36,7 +36,7 @@ class Evaluator
       end
     end
     puts "#######THE VALUE IS #{value}"
-    value
+    value.to_i
   end
 
   def get_term_value
