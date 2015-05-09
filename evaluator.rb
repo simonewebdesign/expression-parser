@@ -1,13 +1,18 @@
 require './tokenizer'
 
+# A class that can compute the value of an arithmetic expression.
 class Evaluator
 
   attr_accessor :tokenizer
 
+  # Constructs an evaluator.
+  # @param expression a string containing the expression to be evaluated
   def initialize(expression)
     @tokenizer = Tokenizer.new expression
   end
 
+  # Evaluates the expression.
+  # @return the value of the expression.
   def get_expression_value
     value = get_term_value
     done = false
@@ -30,6 +35,8 @@ class Evaluator
     value.to_i
   end
 
+  # Evaluates the next term found in the expression.
+  # @return the value of the term
   def get_term_value
     value = get_factor_value
     done = false
@@ -51,6 +58,8 @@ class Evaluator
     value
   end
 
+  # Evaluates the next factor found in the expression.
+  # @return the value of the factor
   def get_factor_value
     value = 0
     token = @tokenizer.peek_token

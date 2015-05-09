@@ -1,8 +1,9 @@
 require './evaluator.rb'
 
-# binding.pry
+# This program calculates the value of an expression
+# consisting of numbers, arithmetic operators, and parentheses.
 print "Enter an expression: "
-expression = "2 + 3   - 4 +  4" # gets
+expression = gets
 
 evaluator = Evaluator.new expression 
 result = evaluator.get_expression_value
