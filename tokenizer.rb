@@ -8,7 +8,7 @@ class Tokenizer
   # Constructs a tokenizer.
   # @param expression the string to tokenize
   def initialize(expression)
-    @expression = expression.strip_whitespace_chars
+    @expr = expression.strip_whitespace_chars
     @start = 0  # The start of the current token
     @finish = 0 # The position after the end of the current token
     next_token  # Find the first token
@@ -17,11 +17,11 @@ class Tokenizer
   # Peeks at the next token without consuming it.
   # @return the next token or nil if there are no more tokens
   def peek_token
-    return nil if @start >= @input.length
+    return nil if @start >= @expr.length
     if @start == 0 && @finish == 0
-      return @input[0]
+      return @expr[0]
     else
-      token = @input[@start...@finish].strip
+      token = @expr[@start...@finish].strip
 
       if token.empty?
         @finish = @finish + 1
@@ -37,11 +37,11 @@ class Tokenizer
   def next_token
     result = peek_token
     @start = @finish
-    return result if @start >= @input.length
+    return result if @start >= @expr.length
 
-    if @input[@start].numeric?
+    if @expr[@start].numeric?
       @finish = @start + 1
-      while @finish < @input.length && @input[@finish].to_s.strip.numeric?
+      while @finish < @expr.length && @expr[@finish].to_s.strip.numeric?
         @finish = @finish + 1
       end
     else

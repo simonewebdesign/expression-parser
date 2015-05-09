@@ -8,4 +8,4 @@ expression = gets
 evaluator = Evaluator.new expression 
 result = evaluator.get_expression_value
 
-print "= #{result}"
+puts "=> #{result}"
