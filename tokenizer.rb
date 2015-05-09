@@ -21,7 +21,7 @@ class Tokenizer
     if @start == 0 && @finish == 0
       return @expr[0]
     else
-      token = @expr[@start...@finish].strip
+      token = @expr[@start...@finish]
 
       if token.empty?
         @finish = @finish + 1
@@ -41,7 +41,7 @@ class Tokenizer
 
     if @expr[@start].numeric?
       @finish = @start + 1
-      while @finish < @expr.length && @expr[@finish].to_s.strip.numeric?
+      while @finish < @expr.length && @expr[@finish].to_s.numeric?
         @finish = @finish + 1
       end
     else
